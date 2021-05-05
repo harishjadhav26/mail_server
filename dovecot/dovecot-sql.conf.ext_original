@@ -1,0 +1,6 @@
+driver = mysql
+connect = host=localhost dbname=vmailadmin user=vmailadmin password=STRONGPASSWORD
+default_pass_scheme = CRAM-MD5
+password_query = SELECT username AS user,password FROM mailbox WHERE username = '%u' AND active='1'
+user_query = SELECT maildir, 2000 AS uid, 12 AS gid FROM mailbox WHERE username = '%u' AND active='1'
+iterate_query = SELECT username AS user FROM mailbox

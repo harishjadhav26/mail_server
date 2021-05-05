@@ -1,0 +1,9 @@
+*.php		usr/share/postfixadmin
+public		usr/share/postfixadmin
+languages	usr/share/postfixadmin
+model		usr/share/postfixadmin
+templates	usr/share/postfixadmin
+lib			usr/share/postfixadmin
+configs		usr/share/postfixadmin
+scripts		usr/share/postfixadmin
+debian/lighttpd/90-postfixadmin.conf	etc/lighttpd/conf-available

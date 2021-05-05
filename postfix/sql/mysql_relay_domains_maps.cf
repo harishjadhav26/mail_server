@@ -1,0 +1,6 @@
+user = vmailadmin
+password = STRONGPASSWORD
+hosts = 127.0.0.1
+dbname = vmailadmin
+query = SELECT domain FROM domain WHERE domain='%s' and backupmx = '1'
+#query = SELECT domain FROM domain WHERE domain='%s' and transport = 'relay' and active = 1 AND NOT exists (select * from alias_domain where alias_domain = '%s' AND alias_domain.active = '1')

@@ -1,0 +1,47 @@
+{
+    "name": "postfixadmin/postfixadmin",
+    "description": "web based administration interface for Postfix mail servers",
+    "type": "project",
+    "license": "GPL-2.0",
+    "scripts": {
+        "build" : [
+            "@check-format",
+            "@lint",
+            "@test-fixup",
+            "@psalm",
+            "@test"
+        ],
+        "check-format": "@php vendor/bin/php-cs-fixer fix --ansi --dry-run --diff",
+        "format": "@php vendor/bin/php-cs-fixer fix --ansi",
+        "lint": "@php ./vendor/bin/parallel-lint --exclude vendor/ --exclude lib/block_random_int.php --exclude lib/array_column.php .",
+        "test": "@php ./vendor/bin/phpunit --coverage-clover ./clover.xml tests/",
+        "test-fixup": "mkdir -p templates_c ; test -f config.local.php || touch config.local.php",
+        "psalm": "@php ./vendor/bin/psalm --no-cache --show-info=false "
+    },
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "ext-mysqli":  "*",
+        "ext-sqlite3": "*",
+        "friendsofphp/php-cs-fixer": "*",
+        "php-parallel-lint/php-parallel-lint": "^1.0",
+        "php":  ">7.2.0",
+        "cedx/coveralls": "^11.0",
+        "phpunit/phpunit": "8.*",
+        "vimeo/psalm":"^4.0",
+        "shardj/zf1-future" : "^1.12"
+    },
+    "autoload": {
+        "files": [
+            "config.inc.php",
+            "functions.inc.php",
+            "lib/smarty/libs/bootstrap.php"
+        ]
+    },
+    "support": {
+        "irc": "irc://irc.freenode.org/postfixadmin",
+        "issues": "https://github.com/postfixadmin/postfixadmin/issues",
+        "chat": "https://gitter.im/postfixadmin/Lobby"
+    }
+}

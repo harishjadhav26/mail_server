@@ -1,0 +1,127 @@
+# http://www.postfix.org/BASIC_CONFIGURATION_README.html etc.
+compatibility_level = 2
+alias_database = hash:/etc/aliases
+alias_maps = hash:/etc/aliases
+broken_sasl_auth_clients = yes
+command_directory = /usr/sbin
+config_directory = /etc/postfix
+daemon_directory = /usr/libexec/postfix
+data_directory = /var/lib/postfix
+debug_peer_level = 2
+debugger_command =
+         PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+         ddd $daemon_directory/$process_name $process_id & sleep 5
+disable_vrfy_command = yes
+html_directory = no
+mynetworks = 127.0.0.0/8, 168.168.0.0/24, 192.168.1.121, 192.168.43.121, $mydomain
+inet_interfaces = all
+inet_protocols = all
+mail_owner = postfix
+mailq_path = /usr/bin/mailq.postfix
+manpage_directory = /usr/share/man
+milter_default_action = accept
+mydestination = $myhostname, localhost.$mydomain, localhost
+mydomain = example.com
+myhostname = mlserver
+myorigin = $mydomain
+smtpd_banner = $myhostname ESMTP $mydomain
+newaliases_path = /usr/bin/newaliases.postfix
+queue_directory = /var/spool/postfix
+readme_directory = /usr/share/doc/postfix-2.10.1/README_FILES
+sample_directory = /usr/share/doc/postfix-2.10.1/samples
+sendmail_path = /usr/sbin/sendmail.postfix
+setgid_group = postdrop
+smtpd_delay_reject = yes
+smtpd_error_sleep_time = 1s
+smtpd_hard_error_limit = 20
+smtpd_helo_required = yes
+smtpd_helo_restrictions = permit_mynetworks,
+                          reject_invalid_hostname,
+                          permit
+#smtpd_recipient_restrictions = permit_sasl_authenticated,
+#                          permit_mynetworks,
+#                          check_policy_service unix:postgrey/socket,
+#                          reject_invalid_hostname,
+#                          reject_non_fqdn_hostname,
+#                          reject_unauth_destination,
+#                          reject_rbl_client list.dsbl.org,
+#                          reject_rbl_client sbl.spamhaus.org,
+#                          reject_rbl_client cbl.abuseat.org,
+#                          reject_rbl_client dul.dnsbl.sorbs.net,
+#                          permit
+smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_invalid_hostname
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_exceptions_networks = $mynetworks
+smtpd_sasl_authenticated_header = yes
+smtpd_sasl_path = private/auth
+smtpd_sasl_type = dovecot
+smtpd_soft_error_limit = 10
+smtpd_tls_auth_only = no
+smtpd_use_tls = yes
+smtpd_tls_mandatory_protocols = TLSv1.2 TLSv1.1 TLSv1
+smtpd_tls_protocols = TLSv1.2 TLSv1.1 TLSv1
+smtp_tls_mandatory_protocols = TLSv1.2 TLSv1.1 TLSv1
+smtp_tls_protocols = TLSv1.2 TLSv1.1 TLSv1
+smtpd_tls_CAfile = /etc/postfix/example_com_ca.crt
+smtpd_tls_cert_file = /etc/postfix/example_com.crt
+smtpd_tls_key_file = /etc/postfix/example_com.key
+smtpd_tls_loglevel = 2
+smtpd_tls_received_header = yes
+smtpd_tls_session_cache_timeout = 3600s
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_tls_security_options = noanonymous
+tls_random_source = dev:/dev/urandom
+unknown_local_recipient_reject_code = 550
+virtual_mailbox_base = /mailstore/vmail
+virtual_mailbox_limit = 51200000
+virtual_mailbox_domains = 
+		proxy:mysql:/etc/postfix/sql/mysql_virtual_domain_maps.cf,
+		proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_maps.cf
+virtual_mailbox_maps = 
+		proxy:mysql:/etc/postfix/sql/mysql_virtual_mailbox_maps.cf,
+		proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_mailbox_maps.cf
+virtual_alias_maps = 
+		proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_maps.cf,
+		proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_maps.cf,
+		proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_catchall_maps.cf
+relay_domains = proxy:mysql:/etc/postfix/sql/mysql_relay_domains_maps.cf
+virtual_minimum_uid = 2000
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+mailbox_transport = lmtp:unix:private/dovecot-lmtp
+virtual_uid_maps = static:2000
+virtual_gid_maps = static:12
+virtual_maildir_limit_message = Sorry, Your maildir has overdrawn your diskspace quota, please free some space of your mailbox and try again.
+virtual_mailbox_limit_maps = proxy:mysql:/etc/postfix/sql/mysql_virtual_mailbox_limit_maps.cf
+virtual_mailbox_limit_override = yes
+virtual_overquota_bounce = yes
+virtual_create_maildirsize = yes
+virtual_mailbox_extended = yes
+smptd_tls_session_cache_database = btree:/var/spool/postfix/smtpd_tls_cache
+smtpd_tls_note_starttls_offer = yes
+smtpd_relay_restrictions = permit_mynetworks,permit_sasl_authenticated,reject_unauth_destination
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+header_checks = regexp:/etc/postfix/header_checks
+relayhost =
+smtp_tls_enforce_peername = no
+enable_original_recipient = no
+smtpd_sender_restrictions = permit_mynetworks, reject_sender_login_mismatch, permit_sasl_authenticated, reject_unknown_sender_domain
+smtpd_reject_unlisted_recipient = no
+bounce_queue_lifetime = 1d
+biff = no
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_client_restrictions = permit_mynetworks, permit_sasl_authenticated, permit
+smtpd_data_restrictions = reject_unauth_pipelining
+smtpd_sasl_local_domain = $mydomain
+default_destination_rate_delay = 1s
+smtp_tls_CAfile = /etc/postfix/example_com_ca.crt
+smtp_tls_cert_file = /etc/postfix/example_com.crt
+smtp_tls_key_file = /etc/postfix/example_com.key
+smtp_tls_loglevel = 2
+smtp_use_tls = yes
+smtp_tls_note_starttls_offer = yes
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous

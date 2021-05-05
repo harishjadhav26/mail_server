@@ -1,0 +1,9 @@
+driver = mysql
+connect = host=localhost dbname=vmailadmin user=vmailadmin password=STRONGPASSWORD
+default_pass_scheme = CRAM-MD5
+password_query = SELECT username AS user,password FROM mailbox WHERE username = '%u' AND active='1'
+# Without quota.
+#user_query = SELECT maildir, 2000 AS uid, 12 AS gid FROM mailbox WHERE username = '%u' AND active='1'
+# If you set quota.
+user_query = SELECT CONCAT('/mailstore/vmail/', maildir) AS home, 2000 AS uid, 12 AS gid, CONCAT('*:bytes=', quota) AS quota_rule FROM mailbox WHERE username = '%u' AND active='1'
+iterate_query = SELECT username AS user FROM mailbox
