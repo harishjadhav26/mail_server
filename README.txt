@@ -12,8 +12,8 @@ SWAP: 2x RAM
 Disk: 20GB OR your requirement as per user count.
 CPU: 2 or 4 core.
 
-# Operating System and Package Version:
-OS: Centos 7
+# Operating System and Components Version:
+OS: Centos 7.x (Minimal Package)
 Dovecot: 2.2.36
 Postfix: 2.10.1
 SpamAssassin: 3.4.0
@@ -21,6 +21,10 @@ PHP: 7.4.16
 Postfixadmin: 3.3.8
 Roundcubemail: 1.4.11
 Apache: 2.4.6
+
+Reference Link:
+https://github.com/postfixadmin/postfixadmin
+https://github.com/roundcube/roundcubemail
 
 # Install required packages.
 
