@@ -4,14 +4,24 @@ Self Hosted Email Server with postfixadmin + roundcubemail + dovecot + postfix +
 #######################################################
 
 # Following resources depends on your users count.
-# Up to 200 users.
-# Up to 20k mail flow daily mail flow handles.
-RAM: 2GB with clamav scanner 4GB RAM required.
-SWAP: 2X RAM
-Disk: 50GB or as per your users count.
+# Supports up to 200 users.
+# Supports up to 20k mail flow daily mail flow handles.
+
+RAM: 2 GiB
+SWAP: 2x RAM
+Disk: 20GB OR your requirement as per user count.
 CPU: 2 or 4 core.
 
-# OS: Centos 7
+# Operating System and Package Version:
+OS: Centos 7
+Dovecot: 2.2.36
+Postfix: 2.10.1
+SpamAssassin: 3.4.0
+PHP: 7.4.16
+Postfixadmin: 3.3.8
+Roundcubemail: 1.4.11
+Apache: 2.4.6
+
 # Install required packages.
 
 yum install -y epel-release yum-utils http://rpms.remirepo.net/enterprise/remi-release-7.rpm vim net-tools ; yum-config-manager --enable remi-php74 ; yum -y install postfix dovecot dovecot-mysql dovecot-pigeonhole mariadb-server telnet mailx wget ; yum -y install spamassassin ; yum install -y libopendkim opendkim; yum install -y postgrey spamassassin spamass-milter-postfix spamass-milter; yum install -y clamav-filesystem clamav-server clamav-update clamav-milter-systemd clamav-data clamav-server-systemd clamav-scanner-systemd clamav clamav-milter clamav-lib  clamav-devel; yum install -y php php-cli php-gd php-xml php-curl php-mysql php-zip php-mbstring php-mcrypt php-fpm php-imap php-common php-pdo php-intl php-imagick; yum update -y; yum clean all;
@@ -197,7 +207,7 @@ http://<IP/HOSTNAME>
 User: postmaster@example.com
 Password: password#123
 
-# Reset User PAssword from DB and Set in Postfixadmin, Roundcubemail, Postfix and Dovecot.
+# Reset User Password and DB, Set in Postfixadmin, Roundcubemail, Postfix and Dovecot as per your require meet.
 
 sed -i 's/password = postfixadmin_password/password = STRONGPASSWORD/g' /etc/postfix/sql/*.cf
 
@@ -206,8 +216,3 @@ doveadm quota recalc -u *@*
 
 # Quota verify.
 sudo doveadm quota get -A
-
-# Clamav anti-virus.
-https://www.snel.com/support/clamav-anti-virus-for-postfix-on-plesk-obsidian-on-centos-7/
-
-
