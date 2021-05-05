@@ -216,3 +216,20 @@ doveadm quota recalc -u *@*
 
 # Quota verify.
 sudo doveadm quota get -A
+
+# Open ports in your firewall application and os level.
+
+Service 	    Software 	Protocol 	Port
+SMTP 	        Postfix 	TCP 	25
+HTTP 	        Apache 	  TCP 	80
+POP3 	        Dovecot 	TCP 	110
+IMAP 	        Dovecot 	TCP 	143
+HTTPS 	      Apache 	  TCP 	443
+SMTPS 	      Postfix 	TCP 	465
+Submission 	  Postfix 	TCP 	587
+IMAPS 	      Dovecot 	TCP 	993
+POP3S   	    Dovecot 	TCP 	995
+ManageSieve 	Dovecot 	TCP 	4190
+
+# Suggestion use Nginx as frontend server.
+This server is not warranty and guaranty
