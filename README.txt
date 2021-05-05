@@ -1,11 +1,6 @@
-# mail_server
-Self Hosted Email Server with postfixadmin + roundcubemail + dovecot + postfix + spamassassin
-
-
+# MAIL SERVER
 #######################################################
-
 Self Hosted Email Server with postfixadmin + roundcubemail + dovecot + postfix + spamassassin
-
 #######################################################
 
 # Following resources depends on your users count.
@@ -50,7 +45,7 @@ Password updated successfully!
 - Remove test database and access to it? [Y/n] y
 - Reload privilege tables now? [Y/n] y
 
-# Login mysql account and create DB.
+# Create postfixadmin database and user.
 
 mysql -u root -p;
 
@@ -82,20 +77,20 @@ mkdir -p /mailstore/vmail
 chmod -R 770 /mailstore/vmail
 chown -R vmail:mail /mailstore/vmail
 
-# Postfix configuration.
+# Take backup Postfix configuration.
 
 cp -a /etc/postfix /etc/postfix_original
 
-# Dovecot configuration.
+# Take backup Dovecot configuration.
 
 cp -a /etc/dovecot /etc/dovecot_original
 
-# Pull github code.
+# Pull mailserver configuration from github.
 
 cd /root/
 git clone https://github.com/harishjadhav26/mail_server.git
 
-# Remove postfix and dovecot config.
+# Remove default postfix and dovecot configuration.
 
 rm -rf /etc/postfix
 
@@ -169,6 +164,10 @@ chown -R vmail.mail /var/run/dovecot/dict
 
 chown -R apache. /var/www/html/*
 
+# Update apache virtualhost file.
+
+cp /root/mail_server/httpd/* /etc/httpd/conf.d/
+
 # Send mail from command line.
 
 echo "hello" | mail -r harish@example.com -s "test sub" postmaster@example.com
@@ -188,11 +187,13 @@ RoundcubemailDB:
 MySQL User: roundcube
 Password: password
 
-Postfixadmin: 
+Postfixadmin:
+http://<IP/HOSTNAME>:8080
 Superadmin User: postmaster@example.com
 Password: password#123
 
 Roundcubemail:
+http://<IP/HOSTNAME>
 User: postmaster@example.com
 Password: password#123
 
