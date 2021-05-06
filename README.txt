@@ -170,10 +170,6 @@ chown -R root:postfix /etc/postfix/sql/*
 sudo chmod 0640 /etc/postfix/sql/*
 chown -R postfix. /var/lib/postfix/smtpd_scache
 
-# Dovecot config permission and ownership update.
-
-chown -R vmail.mail /var/run/dovecot/dict
-
 # Update postfixadmin and roundcubemail configuration.
 
 chown -R apache. /var/www/html/*
@@ -182,15 +178,23 @@ chown -R apache. /var/www/html/*
 
 cp /root/mail_server/httpd/* /etc/httpd/conf.d/
 
-# Send mail from command line.
-
-echo "hello" | mail -r harish@example.com -s "test sub" postmaster@example.com
-
 # Service restart.
 
 systemctl enable mariadb dovecot postfix httpd spamassassin php-fpm
 systemctl restart mariadb dovecot postfix httpd spamassassin php-fpm
 systemctl status mariadb dovecot postfix httpd spamassassin php-fpm
+
+# Dovecot config permission and ownership update.
+
+chown -R vmail.mail /var/run/dovecot/dict
+
+# Send mail from command line.
+
+echo "hello" | mail -r harish@example.com -s "test sub" postmaster@example.com
+
+# Verify mail delivery in maillog.
+
+tail -f /var/log/maillog
 
 # Default password:
 PostfixadminDB:
