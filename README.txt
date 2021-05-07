@@ -231,6 +231,7 @@ sudo doveadm quota get -A
 Service         Software        Protocol        Port
 SMTP            Postfix         TCP             25
 HTTP            Apache          TCP             80
+HTTP            Apache          TCP             8080
 POP3            Dovecot         TCP             110
 IMAP            Dovecot         TCP             143
 HTTPS           Apache          TCP             443
