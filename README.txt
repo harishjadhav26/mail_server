@@ -241,6 +241,10 @@ IMAPS           Dovecot         TCP             993
 POP3S           Dovecot         TCP             995
 ManageSieve     Dovecot         TCP             4190
 
+firewall-cmd --permanent --add-port={25/tcp,80/tcp,8080/tcp,143/tcp,110/tcp,443/tcp,993/tcp,995/tcp,465/tcp,587/tcp,4190/tcp}
+firewall-cmd --reload
+firewall-cmd --list-all
+
 # Suggestion use Nginx as frontend server.
 
 LICENSE:
