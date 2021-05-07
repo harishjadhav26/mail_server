@@ -21,6 +21,7 @@ PHP: 7.4.16
 Postfixadmin: 3.3.8
 Roundcubemail: 1.4.11
 Apache: 2.4.6
+Mariadb
 
 Reference Link:
 https://github.com/postfixadmin/postfixadmin
